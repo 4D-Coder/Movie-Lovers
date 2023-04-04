@@ -29,7 +29,7 @@ describe 'Login Page', type: :feature do
           
           click_button "Log In"
         end
-        save_and_open_page
+        
         expect(current_path).to eq(login_path)
         expect(page).to have_content("Bad login credentials, please try again.")
       end

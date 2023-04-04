@@ -18,7 +18,7 @@ describe 'Site Home Page:', type: :feature do
           expect(page).to have_link('Home')
         end
       end
-
+      
       it 'includes Title of Application, Button to Log In, a List of Existing Users which links to the users dashboard' do
         within 'header#title' do
           expect(page).to have_content('Viewing Party')
