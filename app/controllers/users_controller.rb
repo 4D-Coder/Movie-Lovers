@@ -32,7 +32,15 @@ class UsersController < ApplicationController
   end
 
   def login_user
-    # require 'pry'; binding.pry
+    user = User.find_by(email: user_params[:email])
+    
+    if user.authenticate(params[:password])
+      flash[:success] = "Welcome, #{user.name}!"
+      redirect_to user_path(user.id)
+    else
+      flash[:error] = "Bad login credentials, please try again."
+      render :login_form
+    end
   end
 
   private

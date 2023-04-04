@@ -19,6 +19,19 @@ describe 'Login Page', type: :feature do
         end
 
         expect(current_path).to eq(user_path(@user.id))
+        expect(page).to have_content("Welcome, #{@user.name}!")
+      end
+
+      it "enters bad credentials and is redirected back to the login with an error message" do
+        within('section#login_form') do
+          fill_in :email, with: @user.email
+          fill_in :password, with: @user.password + "7"
+          
+          click_button "Log In"
+        end
+        
+        expect(current_path).to eq(login_path)
+        expect(page).to have_content("Bad login credentials, please try again.")
       end
     end
   end

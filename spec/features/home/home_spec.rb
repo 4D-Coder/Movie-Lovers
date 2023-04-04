@@ -18,15 +18,7 @@ describe 'Site Home Page:', type: :feature do
           expect(page).to have_link('Home')
         end
       end
-
-      it 'I click a button to register a new user and I am taken to a registry form' do
-        within 'section#new_user' do
-          click_button 'Create A New User'
-        end
-
-        expect(current_path).to eq(register_path)
-      end
-
+      
       it 'includes Title of Application, Button to Log In, a List of Existing Users which links to the users dashboard' do
         within 'header#title' do
           expect(page).to have_content('Viewing Party')
@@ -63,7 +55,7 @@ describe 'Site Home Page:', type: :feature do
         end
       end
 
-      it 'has a link to create a new user' do
+      it 'has a link to create a new user, I click it and I am taken to a registry form' do
         within('section#new_user') do
           expect(page).to have_button("Create A New User")
 
