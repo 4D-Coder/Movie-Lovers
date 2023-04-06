@@ -16,8 +16,9 @@ RSpec.describe 'Site Home Page:', type: :feature do
           expect(page).to have_link('Home')
         end
       end
-
+      
       it 'includes Title of Application, a button to create an account, and a link to log in' do
+
         within 'header#title' do
           expect(page).to have_content('Viewing Party')
         end
