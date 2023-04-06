@@ -7,7 +7,15 @@ describe 'User Discover Page', type: :feature do
   describe 'As a user' do
     context "When I visit '/users/:id/discover'" do
       before(:each) do
-        @user1 = create(:user)
+        @fake_password = Faker::Internet.password
+        @user1 = create(:user, password: @fake_password, role: 1)
+
+        visit login_path
+        
+        fill_in :email, with: @user1.email
+        fill_in :password, with: @fake_password
+
+        click_button "Log In"
       end
 
       it 'links to the page from the users show page' do

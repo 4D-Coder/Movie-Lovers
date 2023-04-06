@@ -21,8 +21,8 @@ class UsersController < ApplicationController
     @new_user = User.new(user_params)
 
     if @new_user.valid? && user_params[:password] == user_params[:password_confirmation]
-      session[:user_id] = @new_user.id
       @new_user.save
+      session[:user_id] = @new_user.id
       redirect_to user_path(@new_user.id)
       flash[:success] = "Welcome, #{@new_user.name}!"
     elsif user_params[:password] != user_params[:password_confirmation]

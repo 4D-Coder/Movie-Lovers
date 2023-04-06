@@ -6,10 +6,18 @@ describe 'New Viewing Party Page' do
   describe 'As a user' do
     context "When I visit 'users/:user_id/movies/:movie_id/new'" do
       before(:each) do
-        @user1 = create(:user)
-        @user2 = create(:user)
-        @user3 = create(:user)
+        @fake_password = Faker::Internet.password
+        @user1 = create(:user, password: @fake_password, role: 1)
+        @user2 = create(:user, password: @fake_password, role: 1)
+        @user3 = create(:user, password: @fake_password, role: 1)
 
+        visit login_path
+
+        fill_in :email, with: @user1.email
+        fill_in :password, with: @fake_password
+
+        click_button "Log In"
+        
         VCR.use_cassette('movie_details', serialize_with: :json, :allow_playback_repeats => true, match_requests_on: [:method, :path]) do
           @cocaine_bear = MovieFacade.new.movie_details(804150)
 

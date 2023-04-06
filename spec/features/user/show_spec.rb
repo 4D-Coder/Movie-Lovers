@@ -7,8 +7,18 @@ describe 'User Show Page', type: :feature do
   describe 'As a registered/logged in user' do
     context "When I visit '/users/:id'" do
       before(:each) do
-        @user1 = create(:user)
-        @user2 = create(:user)
+      
+        @fake_password = Faker::Internet.password
+        @user1 = create(:user, password: @fake_password, role: 1)
+        @user2 = create(:user, password: @fake_password, role: 1)
+        @user3 = create(:user, password: @fake_password, role: 1)
+
+        visit login_path
+
+        fill_in :email, with: @user1.email
+        fill_in :password, with: @fake_password
+
+        click_button "Log In"
 
         VCR.use_cassette('movie_details', serialize_with: :json, :allow_playback_repeats => true, match_requests_on: [:method, :path]) do
           @cocaine_bear = MovieFacade.new.movie_details(804150)
@@ -71,7 +81,15 @@ describe 'User Show Page', type: :feature do
     it 'I see a button to Discover Movies, and when I click on it, I am redirected to the discover page' do
       VCR.use_cassette('movie_details', serialize_with: :json, :allow_playback_repeats => true, match_requests_on: [:method, :path]) do
         
-        @user1 = create(:user)
+        @fake_password = Faker::Internet.password
+        @user1 = create(:user, password: @fake_password, role: 1)
+
+        visit login_path
+
+        fill_in :email, with: @user1.email
+        fill_in :password, with: @fake_password
+
+        click_button "Log In"
         
         visit user_path(@user1)
 
