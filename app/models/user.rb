@@ -9,5 +9,7 @@ class User < ApplicationRecord
   validates :name, :email, presence: true
   validates :email, uniqueness: true, 'valid_email_2/email': { strict_mx: true }
 
+  enum role: %w(visitor registered_user admin)
+
   scope :all_except, ->(user) { where.not(id: user) }
 end

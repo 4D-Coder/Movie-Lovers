@@ -17,6 +17,16 @@ SimpleCov.start
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'vcr'
+require 'webmock/rspec'
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+  config.hook_into :webmock
+  config.filter_sensitive_data('api_key') { ENV["movie_db_key"] }
+  config.allow_http_connections_when_no_cassette = true
+end
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -95,14 +105,6 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
-  require 'vcr'
-  require 'webmock/rspec'
-
-  VCR.configure do |config|
-    config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
-    config.hook_into :webmock
-    config.filter_sensitive_data('api_key') { ENV["movie_db_key"] }
-  end
 
   config.before(:each) do
     allow_any_instance_of(ValidEmail2::Address).to receive_messages(

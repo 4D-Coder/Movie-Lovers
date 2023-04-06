@@ -41,7 +41,12 @@
     </header>
     
     <nav id="navigation">
-      <%= link_to "Home", root_path  %>
+      <% if current_user %>
+        <p><%= link_to "Log Out", login_path, method: :delete %></p>
+        <p><%= link_to "Home", root_path  %></p>
+      <% else %>
+        <%= link_to "Home", root_path  %>
+      <% end %>
     </nav>
     
     <%= yield %>

@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-describe 'Login Page', type: :feature do
-  describe 'As a user,' do
+RSpec.describe 'Login Page', type: :feature do
+  describe 'As a visitor,' do
     context "when I visit the login page '/login'" do
       before(:each) do
         @user = create(:user, password: Faker::Internet.password)
@@ -32,6 +32,28 @@ describe 'Login Page', type: :feature do
         
         expect(current_path).to eq(login_path)
         expect(page).to have_content("Bad login credentials, please try again.")
+      end
+    end
+  end
+
+  describe 'As a registered/logged in user' do
+    context "when I visit the '/login' page" do
+      before(:each) do
+        @registered_user = create(:user, password: Faker::Internet.password, role: 1)
+        visit login_path
+
+        fill_in :email, with: @registered_user.email
+        fill_in :password, with: @registered_user.password
+        # Logging in with a before block until stubbing a login is better understood
+      end
+        
+      it 'When I visit the landing page, I no longer see a link to Log In or Create an Account, But I see a link to Log Out.' do
+        click_button 'Log In'
+        click_link 'Home'
+
+        expect(page).to have_link('Log Out')
+        expect(page).to_not have_link('I already have an account')
+        expect(page).to_not have_button('Create An Account')
       end
     end
   end
