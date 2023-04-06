@@ -3,10 +3,15 @@
 # app/controllers/users_controller.rb
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
-    @host_viewing_parties = ViewingParty.host_viewing_parties(@user)
-    @invited_viewing_parties = ViewingParty.invited_viewing_parties(@user)
-    @movies = MovieFacade.new.viewing_party_movies(ViewingParty.list_movie_ids(@user))
+    if current_user
+      @user = User.find(params[:id])
+      @host_viewing_parties = ViewingParty.host_viewing_parties(@user)
+      @invited_viewing_parties = ViewingParty.invited_viewing_parties(@user)
+      @movies = MovieFacade.new.viewing_party_movies(ViewingParty.list_movie_ids(@user))
+    else
+      redirect_to root_path
+      flash[:error] = "You must be logged in or registered to access your dashboard."
+    end
   end
 
   def new
@@ -16,6 +21,7 @@ class UsersController < ApplicationController
     @new_user = User.new(user_params)
 
     if @new_user.valid? && user_params[:password] == user_params[:password_confirmation]
+      session[:user_id] = @new_user.id
       @new_user.save
       redirect_to user_path(@new_user.id)
       flash[:success] = "Welcome, #{@new_user.name}!"
@@ -34,13 +40,20 @@ class UsersController < ApplicationController
   def login_user
     user = User.find_by(email: user_params[:email])
     
-    if user.authenticate(params[:password])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
       redirect_to user_path(user.id)
     else
       flash[:error] = "Bad login credentials, please try again."
       render :login_form
     end
+  end
+
+  def logout_user
+    session.delete(:user_id)
+    # reset_session
+    redirect_to root_path
   end
 
   private
@@ -50,7 +63,8 @@ class UsersController < ApplicationController
       :name,
       :email,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :user_id
     )
   end
 end

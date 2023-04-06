@@ -4,7 +4,7 @@
 require 'rails_helper'
 
 describe 'User Show Page', type: :feature do
-  describe 'As a user' do
+  describe 'As a registered/logged in user' do
     context "When I visit '/users/:id'" do
       before(:each) do
         @user1 = create(:user)
@@ -26,19 +26,6 @@ describe 'User Show Page', type: :feature do
             expect(page).to have_content("#{@user1.name}'s Dashboard")
             expect(page).to_not have_content(@user2.name)
           end
-        end
-      end
-
-      it 'I see a button to Discover Movies, and when I click on it, I am redirected to the discover page' do
-        VCR.use_cassette('movie_details', serialize_with: :json, :allow_playback_repeats => true, match_requests_on: [:method, :path]) do
-          visit user_path(@user1)
-          within '.button_to' do
-            expect(page).to have_button('Discover Movies')
-
-            click_button 'Discover Movies'
-          end
-
-          expect(current_path).to eq(user_discover_index_path(@user1))
         end
       end
 
@@ -78,6 +65,23 @@ describe 'User Show Page', type: :feature do
             end
           end
         end
+      end
+    end
+
+    it 'I see a button to Discover Movies, and when I click on it, I am redirected to the discover page' do
+      VCR.use_cassette('movie_details', serialize_with: :json, :allow_playback_repeats => true, match_requests_on: [:method, :path]) do
+        
+        @user1 = create(:user)
+        
+        visit user_path(@user1)
+
+        within '.button_to' do
+          expect(page).to have_button('Discover Movies')
+
+          click_button 'Discover Movies'
+        end
+
+        expect(current_path).to eq(user_discover_index_path(@user1))
       end
     end
   end

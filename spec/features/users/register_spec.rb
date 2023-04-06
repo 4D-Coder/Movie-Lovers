@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Register Page', type: :feature do
+RSpec.describe 'Register Page', type: :feature do
   describe 'As a user,' do
     context " when I visit the register path ('/register')" do
       before(:each) do

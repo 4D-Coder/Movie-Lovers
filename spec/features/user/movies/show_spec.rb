@@ -30,11 +30,11 @@ describe "User's Movie Details Page", type: :feature do
       it "The 'Create A Viewing Party for Cocaine Bear' button takes the user to new viewing party page" do
         VCR.use_cassette('movie_details', serialize_with: :json, match_requests_on: [:method, :path]) do
           @cocaine_bear = MovieFacade.new.movie_details(804150)
-
+          
           within('nav#viewing_party_options') do
             click_button 'Create A Viewing Party for Cocaine Bear'
           end
-
+          
           expect(current_path).to eq(new_user_movie_viewing_party_path(@user1.id, @cocaine_bear.id))
         end
       end

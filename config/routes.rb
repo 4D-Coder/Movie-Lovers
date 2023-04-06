@@ -8,12 +8,14 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  get   '/register',  to: 'users#new'
-  post  '/register',  to: 'users#create'
-  get   '/login',     to: 'users#login_form'
-  post  '/login',     to: 'users#login_user'
+  get     '/register',  to: 'users#new' 
+  post    '/register',  to: 'users#create'
+  get     '/login',     to: 'users#login_form' 
+  post    '/login',     to: 'users#login_user'
+  delete  '/login',     to: 'users#logout_user'
 
   resources :users, only: :show do
+    # resources :dashboard, only: %i[index show], controller: 'user/dashboard'
     resources :discover, only: [:index], controller: 'user/discover'
     resources :movies, only: [:index, :show], controller: 'user/movies' do
       resources :viewing_parties, path: '/viewing-party', only: [:new, :create], controller: 'user/movie/viewing_parties'

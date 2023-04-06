@@ -2,7 +2,9 @@
 
 require 'rails_helper'
 
-describe User, type: :model do
+RSpec.describe User, type: :model do
+  puts "Running tests in #{Rails.env} environment..."
+
   describe 'associations' do
     it { should have_many :viewing_party_users }
     it { should have_many(:viewing_parties).through(:viewing_party_users) }
@@ -35,5 +37,11 @@ describe User, type: :model do
         expect(User.all_except(user2)).to eq([user1, user3, user4])
       end
     end
+  end
+
+  def teardown
+    puts "Executing test data teardown..."
+    User.destroy_all
+    puts "Teardown complete."
   end
 end
