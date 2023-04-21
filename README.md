@@ -1,10 +1,10 @@
-# Viewing Party
+# Movie Lovers
 
-This is the base repo for the [Viewing Party Lite project](https://backend.turing.edu/module3/projects/viewing_party_lite) used for Turing's Backend Module 3.
+This is a repo forked from [this repository](https://github.com/hamouj/viewing_party_lite_7) for further individual practice and development beyond pair work with [Jasmine Hamou](https://github.com/hamouj)
 
 ### About this Project
 
-Viewing Party Lite is an application in which users can explore movie options and create a viewing party event for themselves and other users of the application.
+Movie Lovers is an application in which users can explore movie options and create an event for themselves and other users of the application.
 
 ## Setup
 
