@@ -1,6 +1,6 @@
 # Movie Lovers
 
-This is a repo forked from [this repository](https://github.com/hamouj/viewing_party_lite_7) for further individual practice and development beyond pair work with [Jasmine Hamou](https://github.com/hamouj)
+This is a project forked from [this repository](https://github.com/hamouj/viewing_party_lite_7) for further individual practice and development beyond pair work with [Jasmine Hamou](https://github.com/hamouj)
 
 ### About this Project
 
