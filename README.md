@@ -1,6 +1,6 @@
 # Movie Lovers
 
-This is a project forked from a project built with [Jasmine Hamou](https://github.com/hamouj) for further individual practice and development beyond pair work with 
+This is a project forked from a project built with [Jasmine Hamou](https://github.com/hamouj) for further individual practice and development beyond pair work.
 
 ### About this Project
 
